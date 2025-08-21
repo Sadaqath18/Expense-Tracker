@@ -1,7 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
 body {
   font-family: Arial, sans-serif;
+  text-align: center;
   background: #f4f4f9;
-  margin: 0;
   padding: 20px;
 }
 
@@ -25,6 +32,7 @@ h3 {
   margin: 10px 0;
 }
 
+/* Income & Expense Summary */
 #income-expense {
   display: flex;
   justify-content: space-between;
@@ -33,16 +41,60 @@ h3 {
 
 #income {
   color: green;
+  
 }
 
 #expense {
   color: red;
 }
 
-form input,
-form button {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
+/* Form */
+form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+form input[type="text"],
+form input[type="number"] {
   padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+form button {
+  width: 80%;
+  max-width: 200px;
+  margin: 10px auto;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-add {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-add:hover {
+  background-color: #218838;
+}
+
+.btn-clear {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-clear:hover {
+  background-color: #a71d2a;
+}
+
+.chart-container {
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto;
 }

@@ -5,24 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Expense Tracker</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
-    <h1>Expense Tracker</h1>
+    <div id="app">
+      <h1>💸Expense Tracker</h1>
 
-    <!-- Balance Section -->
-    <div id="balance">
-      <h2>Your Balance: <span id="balance-amount">₹0</span></h2>
+      <!-- Balance Section -->
+      <div id="balance">
+        <h3>Your Balance:</h3>
+        <h2 id="balance-amount">₹0.00</h2>
+      </div>
+
+      <!-- Transaction Form -->
+      <form id="transaction-form">
+        <input type="text" id="text" placeholder="Enter description" required />
+        <label for="amount">Amount (negative: expense, positive: income)</label>
+        <input
+          type="number"
+          id="amount"
+          placeholder="Enter amount..."
+          required
+        />
+
+        <button type="submit" class="btn-add">Add Transaction</button>
+        <button type="button" id="clear-transactions" class="btn-clear">
+          Clear Transactions
+        </button>
+      </form>
+
+      <!-- Transaction List -->
+      <h3>History</h3>
+      <ul id="transaction-list" class="list"></ul>
+
+      <div class="summary">
+        <p>Income: <span id="income">0.00</span></p>
+        <p>Expense: <span id="expense">0.00</span></p>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="expenseChart"></canvas>
+      </div>
+
+      <script src="script.js" defer></script>
+      
     </div>
-
-    <!-- Transaction Form -->
-    <form id="transaction-form">
-      <input type="text" id="text" placeholder="Enter description" required />
-      <input type="number" id="amount" placeholder="Enter amount" required />
-      <button type="submit">Add Transaction</button>
-    </form>
-
-    <!-- Transaction List -->
-    <ul id="transaction-list"></ul>
-    <script src="script.js" defer></script>
   </body>
 </html>
