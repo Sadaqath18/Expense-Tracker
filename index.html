@@ -28,15 +28,21 @@
           required
         />
 
-        <button type="submit" class="btn-add">Add Transaction</button>
-        <button type="button" id="clear-transactions" class="btn-clear">
-          Clear Transactions
-        </button>
+        <div class="button-group">
+          <button type="submit" class="btn-add">Add Transaction</button>
+          <button type="button" id="clear-transactions" class="btn-clear">
+        Clear Transactions
+      </button>
+        </div>
       </form>
+
+      
 
       <!-- Transaction List -->
       <h3>History</h3>
-      <ul id="transaction-list" class="list"></ul>
+      <div id="transaction-list">
+        <ul id="transactions" class="list"></ul>
+      </div>
 
       <div class="summary">
         <p>Income: <span id="income">0.00</span></p>
@@ -48,7 +54,6 @@
       </div>
 
       <script src="script.js" defer></script>
-      
     </div>
   </body>
 </html>
