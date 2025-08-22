@@ -2,24 +2,28 @@ const balance = document.getElementById("balance-amount");
 const incomeEl = document.getElementById("income");
 const expenseEl = document.getElementById("expense");
 const form = document.getElementById("transaction-form");
-const list = document.getElementById("transaction-list");
+const list = document.getElementById("transactions"); // ✅ FIXED
 const textInput = document.getElementById("text");
 const amountInput = document.getElementById("amount");
+const clearBtn = document.getElementById("clear-transactions");
 
 let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
 
 const ctx = document.getElementById("expenseChart").getContext("2d");
 let expenseChart = new Chart(ctx, {
-  type: "pie",
+  type: "doughnut",
   data: {
     labels: ["Income", "Expense"],
-    datasets: [{
-      data: [0, 0],
-      backgroundColor: ["#4caf50", "#f44336"],
-    }],
+    datasets: [
+      {
+        data: [0, 0],
+        backgroundColor: ["#4caf50", "#f44336"],
+      },
+    ],
   },
   options: {
-    maintainAspectRatio: true
+    responsive: true,
+    maintainAspectRatio: true,
   },
 });
 
@@ -42,7 +46,6 @@ function addTransaction(e) {
   amountInput.value = "";
 }
 
-// Add DOM transaction
 function addTransactionDOM(transaction) {
   const sign = transaction.amount < 0 ? "-" : "+";
   const item = document.createElement("li");
@@ -54,23 +57,37 @@ function addTransactionDOM(transaction) {
   list.appendChild(item);
 }
 
-// Update the balance, income, and expense totals
 function updateValues() {
-  const amounts = transactions.map(t => t.amount);
+  const amounts = transactions.map((t) => t.amount);
   const total = amounts.reduce((acc, item) => acc + item, 0).toFixed(2);
-  const incomeTotal = amounts.filter(item => item > 0).reduce((acc, item) => acc + item, 0).toFixed(2);
-  const expenseTotal = (amounts.filter(item => item < 0).reduce((acc, item) => acc + item, 0) * -1).toFixed(2);
+  const incomeTotal = amounts
+    .filter((item) => item > 0)
+    .reduce((acc, item) => acc + item, 0)
+    .toFixed(2);
+  const expenseTotal = (
+    amounts.filter((item) => item < 0).reduce((acc, item) => acc + item, 0) * -1
+  ).toFixed(2);
 
   balance.innerText = `₹${total}`;
   incomeEl.innerText = `+₹${incomeTotal}`;
   expenseEl.innerText = `-₹${expenseTotal}`;
 
-  expenseChart.data.datasets[0].data = [Number(incomeTotal), Number(expenseTotal)];
+  expenseChart.data.datasets[0].data = [
+    Number(incomeTotal),
+    Number(expenseTotal),
+  ];
   expenseChart.update();
 }
 
+// ✅ FIXED removeTransaction
 function removeTransaction(id) {
-  transactions = transactions.filter(t => t.id !== id);
+  transactions = transactions.filter((t) => t.id !== id);
+  updateLocalStorage();
+  init();
+}
+
+function clearTransactions() {
+  transactions = [];
   updateLocalStorage();
   init();
 }
@@ -79,7 +96,6 @@ function updateLocalStorage() {
   localStorage.setItem("transactions", JSON.stringify(transactions));
 }
 
-// Initialize the app
 function init() {
   list.innerHTML = "";
   transactions.forEach(addTransactionDOM);
@@ -87,4 +103,6 @@ function init() {
 }
 
 init();
+
 form.addEventListener("submit", addTransaction);
+clearBtn.addEventListener("click", clearTransactions);
